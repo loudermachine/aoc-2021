@@ -28,11 +28,11 @@ fn part_one() {
 fn part_two() {
     let measures = read_measures();
     let (mut slice_start, mut slice_end) = (0, 3);
-    let last_sum: i32 = measures[slice_start..slice_end].iter().sum();
+    let mut last_sum: i32 = measures[slice_start..slice_end].iter().sum();
     let mut count = 0;
     loop {
-        slice_start += 3;
-        slice_end += 3;
+        slice_start += 1;
+        slice_end += 1;
 
         if slice_end > measures.len() {
             break;
@@ -42,6 +42,7 @@ fn part_two() {
         if curr_sum > last_sum {
             count += 1;
         }
+        last_sum = curr_sum;
     }
 
     println!(
