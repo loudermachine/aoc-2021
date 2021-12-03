@@ -22,6 +22,36 @@ struct Command {
     units: i32
 }
 
+#[derive(Debug)]
+struct Position {
+    pub horizontal: i32,
+    pub depth: i32,
+    pub aim: i32,
+}
+
+impl Position {
+    pub fn new() -> Self {
+        Self { horizontal: 0, depth: 0, aim: 0 }
+    }
+
+    pub fn add(&mut self, cmd: &Command) {
+        use CommandType::*;
+        match cmd.r#type {
+            Forward => {
+                self.horizontal += cmd.units;
+                self.depth += self.aim * cmd.units;
+            },
+            Up => {
+                self.aim -= cmd.units
+            },
+            Down => {
+                self.aim += cmd.units
+            },
+
+        }
+    }
+}
+
 impl From<&str> for Command {
     fn from(s: &str) -> Self {
         match s.split_whitespace().collect::<Vec<&str>>()[..] {
@@ -55,4 +85,14 @@ fn part_one() {
     println!(
          "What do you get if you multiply your final horizontal position by your final depth?\nR: {}", h_pos * d_pos
     )
+}
+
+#[test]
+fn part_two() {
+    let cmds = read_commands();
+    let mut pos = Position::new();
+    cmds.iter().for_each(|cmd| pos.add(cmd));
+    println!(
+        "What do you get if you multiply your final horizontal position by your final depth?\nR: {}", pos.horizontal * pos.depth
+   )
 }
