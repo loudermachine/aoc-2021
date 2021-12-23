@@ -31,7 +31,10 @@ struct Diagnostic {
 
 impl Diagnostic {
     pub fn new(reports: Vec<i32>) -> Self {
-        Self { reports, bit_len: 5 }
+        Self {
+            reports,
+            bit_len: 5,
+        }
     }
 
     pub fn load() -> Self {
@@ -41,7 +44,10 @@ impl Diagnostic {
             .map(|line| i32::from_str_radix(line, 2).unwrap())
             .collect::<Vec<i32>>();
 
-        Self { reports, bit_len: 12 }
+        Self {
+            reports,
+            bit_len: 12,
+        }
     }
 
     pub fn power_consumption(&self) -> u32 {
@@ -53,23 +59,20 @@ impl Diagnostic {
         for pos in (0..self.bit_len).rev() {
             let (zero_bits, one_bits) = bit_count(&candidates, pos);
             if one_bits >= zero_bits {
-                candidates = candidates
-                    .into_iter()
-                    .filter(|n| bit_at(*n, pos))
-                    .collect();
+                candidates = candidates.into_iter().filter(|n| bit_at(*n, pos)).collect();
             } else {
                 candidates = candidates
-                .into_iter()
-                .filter(|n| !bit_at(*n, pos))
-                .collect();
+                    .into_iter()
+                    .filter(|n| !bit_at(*n, pos))
+                    .collect();
             }
 
             if candidates.len() == 1 {
-                break
+                break;
             }
         }
-        
-        return candidates.pop().unwrap()
+
+        return candidates.pop().unwrap();
     }
 
     pub fn co2_scrubber_rating(&self) -> i32 {
@@ -82,18 +85,15 @@ impl Diagnostic {
                     .filter(|n| !bit_at(*n, pos))
                     .collect();
             } else {
-                candidates = candidates
-                .into_iter()
-                .filter(|n| bit_at(*n, pos))
-                .collect();
+                candidates = candidates.into_iter().filter(|n| bit_at(*n, pos)).collect();
             }
 
             if candidates.len() == 1 {
-                break
+                break;
             }
         }
-        
-        return candidates.pop().unwrap()
+
+        return candidates.pop().unwrap();
     }
 
     fn gamma_rate(&self) -> u32 {

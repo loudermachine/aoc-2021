@@ -46,6 +46,7 @@ fn part_two() {
     }
 
     println!(
-        "How many sums are larger than the previous sum?\nR: {}", count
+        "How many sums are larger than the previous sum?\nR: {}",
+        count
     )
 }

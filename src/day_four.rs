@@ -129,7 +129,7 @@ impl Game {
         for number in self.inputs.iter() {
             for (idx, board) in self.boards.iter_mut().enumerate() {
                 if board.check_cell(*number) && board.won() {
-                    return (*number, idx)
+                    return (*number, idx);
                 }
             }
         }
@@ -142,7 +142,7 @@ impl Game {
         for number in self.inputs.iter() {
             for (idx, board) in self.boards.iter_mut().enumerate() {
                 if board.won() {
-                    continue
+                    continue;
                 }
                 if board.check_cell(*number) && board.won() {
                     last_won.replace((*number, idx));
@@ -150,7 +150,7 @@ impl Game {
             }
 
             if self.boards.iter().all(|b| b.won()) {
-                break
+                break;
             }
         }
 

@@ -12,14 +12,14 @@ impl From<&str> for CommandType {
             "forward" => Self::Forward,
             "down" => Self::Down,
             "up" => Self::Up,
-            _ => panic!("Invalid command type")
+            _ => panic!("Invalid command type"),
         }
     }
 }
 
 struct Command {
     r#type: CommandType,
-    units: i32
+    units: i32,
 }
 
 #[derive(Debug)]
@@ -31,7 +31,11 @@ struct Position {
 
 impl Position {
     pub fn new() -> Self {
-        Self { horizontal: 0, depth: 0, aim: 0 }
+        Self {
+            horizontal: 0,
+            depth: 0,
+            aim: 0,
+        }
     }
 
     pub fn add(&mut self, cmd: &Command) {
@@ -40,14 +44,9 @@ impl Position {
             Forward => {
                 self.horizontal += cmd.units;
                 self.depth += self.aim * cmd.units;
-            },
-            Up => {
-                self.aim -= cmd.units
-            },
-            Down => {
-                self.aim += cmd.units
-            },
-
+            }
+            Up => self.aim -= cmd.units,
+            Down => self.aim += cmd.units,
         }
     }
 }
@@ -57,9 +56,9 @@ impl From<&str> for Command {
         match s.split_whitespace().collect::<Vec<&str>>()[..] {
             [cmd, unit] => Command {
                 r#type: CommandType::from(cmd),
-                units: unit.parse::<i32>().unwrap()
+                units: unit.parse::<i32>().unwrap(),
             },
-            _ => panic!("Invalid command")
+            _ => panic!("Invalid command"),
         }
     }
 }
@@ -75,12 +74,11 @@ fn read_commands() -> Vec<Command> {
 #[test]
 fn part_one() {
     let cmds = read_commands();
-    let (h_pos, d_pos) = cmds.iter()
-        .fold((0, 0), |acc, cmd| match cmd.r#type {
-            CommandType::Up => (acc.0, acc.1 - cmd.units),
-            CommandType::Down => (acc.0, acc.1 + cmd.units),
-            CommandType::Forward => (acc.0 + cmd.units, acc.1)
-        });
+    let (h_pos, d_pos) = cmds.iter().fold((0, 0), |acc, cmd| match cmd.r#type {
+        CommandType::Up => (acc.0, acc.1 - cmd.units),
+        CommandType::Down => (acc.0, acc.1 + cmd.units),
+        CommandType::Forward => (acc.0 + cmd.units, acc.1),
+    });
 
     println!(
          "What do you get if you multiply your final horizontal position by your final depth?\nR: {}", h_pos * d_pos
