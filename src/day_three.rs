@@ -6,11 +6,7 @@ use std::fs;
 
 fn bit_at(n: i32, pos: u32) -> bool {
     let pos = 1 << pos;
-    if n & pos != 0 {
-        true
-    } else {
-        false
-    }
+    n & pos != 0
 }
 
 fn bit_count(nums: &[i32], pos: u32) -> (i32, i32) {
@@ -40,7 +36,7 @@ impl Diagnostic {
     pub fn load() -> Self {
         let input = fs::read_to_string("./data/day_three.txt").unwrap();
         let reports = input
-            .split("\n")
+            .split('\n')
             .map(|line| i32::from_str_radix(line, 2).unwrap())
             .collect::<Vec<i32>>();
 
@@ -72,7 +68,7 @@ impl Diagnostic {
             }
         }
 
-        return candidates.pop().unwrap();
+        candidates.pop().unwrap()
     }
 
     pub fn co2_scrubber_rating(&self) -> i32 {
@@ -93,7 +89,7 @@ impl Diagnostic {
             }
         }
 
-        return candidates.pop().unwrap();
+        candidates.pop().unwrap()
     }
 
     fn gamma_rate(&self) -> u32 {

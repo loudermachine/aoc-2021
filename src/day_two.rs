@@ -66,8 +66,8 @@ impl From<&str> for Command {
 fn read_commands() -> Vec<Command> {
     let input = fs::read_to_string("./data/day_two.txt").unwrap();
     input
-        .split("\n")
-        .map(|line| Command::from(line))
+        .split('\n')
+        .map(Command::from)
         .collect::<Vec<Command>>()
 }
 

@@ -3,7 +3,7 @@ use std::fs;
 fn read_measures() -> Vec<i32> {
     let input = fs::read_to_string("./data/day_one.txt").unwrap();
     input
-        .split("\n")
+        .split('\n')
         .map(|m| m.parse::<i32>().unwrap())
         .collect::<Vec<i32>>()
 }
